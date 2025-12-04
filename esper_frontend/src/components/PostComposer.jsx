@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./PostComposer.css";
 
-const topics = ["Technology", "Design", "Education", "Health", "Travel", "Sports"];
+// const topics = ["Technology", "Design", "Education", "Health", "Travel", "Sports"];
 
 const PostComposer = () => {
   const [form, setForm] = useState({
@@ -11,17 +11,17 @@ const PostComposer = () => {
     extra: "",
     topic: "",
   });
-  const [showTopics, setShowTopics] = useState(false);
+  // const [showTopics, setShowTopics] = useState(false);
 
-  const update = (e) => {
-    const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-  };
+  // const update = (e) => {
+  //   const { name, value } = e.target;
+  //   setForm((f) => ({ ...f, [name]: value }));
+  // };
 
-  const selectTopic = (t) => {
-    setForm((f) => ({ ...f, topic: t }));
-    setShowTopics(false);
-  };
+  // const selectTopic = (t) => {
+  //   setForm((f) => ({ ...f, topic: t }));
+  //   setShowTopics(false);
+  // };
 
   const submit = (e) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ const PostComposer = () => {
             name="title"
             placeholder="Title"
             value={form.title}
-            onChange={update}
+            // onChange={update}
           />
 
           <textarea
@@ -59,7 +59,7 @@ const PostComposer = () => {
             name="body"
             placeholder="Write your thoughts here..."
             value={form.body}
-            onChange={update}
+            // onChange={update}
             rows={5}
           />
 
@@ -70,20 +70,20 @@ const PostComposer = () => {
               name="tags"
               placeholder="Add Tags"
               value={form.tags}
-              onChange={update}
+              // onChange={update}
             />
             <input
               className="pc-input"
-              type="text"
+              type="FILE"
               name="extra"
-              placeholder="(Optional)"
+              placeholder="IMAGE / VIDEO URL"
               value={form.extra}
-              onChange={update}
+              // onChange={update}
             />
           </div>
 
           {/* Topic select */}
-          <div className="pc-topic-wrap">
+          {/* <div className="pc-topic-wrap">
             <button
               type="button"
               className="pc-topic-btn"
@@ -107,7 +107,7 @@ const PostComposer = () => {
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Actions */}
           <div className="pc-actions">

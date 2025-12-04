@@ -1,13 +1,9 @@
 package com.project.esperApp.controller;
-
 import com.project.esperApp.DTO.PostRequest;
 import com.project.esperApp.entity.Post;
 import com.project.esperApp.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-
-
 import java.util.List;
 @RestController
 @RequestMapping("/posts")
@@ -15,7 +11,6 @@ public class PostController {
 
    @Autowired
    private PostService postService;
-
 
     @PostMapping("/create")
     public Post createPost(@RequestBody PostRequest request) {

@@ -1,5 +1,4 @@
 package com.project.esperApp.service;
-
 import com.project.esperApp.entity.Hashtag;
 import com.project.esperApp.entity.Post;
 import com.project.esperApp.entity.User;
@@ -8,7 +7,6 @@ import com.project.esperApp.repository.PostRepository;
 import com.project.esperApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,9 +23,6 @@ public class PostService {
 
     @Autowired
     private HashtagRepository hashtagRepository;
-
-
-
 
     public Post createPost(Long userId, String title, String content, String image, Set<String> tags) {
 
@@ -120,13 +115,4 @@ public class PostService {
         post.setShare(post.getShare() + 1);
         return postRepository.save(post);
     }
-
-
-
-
-
-
-
-
-
 }

@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class CommentService {
 
-
     @Autowired
     private CommentRepository commentRepository;
 
@@ -42,9 +41,4 @@ public class CommentService {
     public List<Comment> getCommentsForPost(Long postId) {
         return commentRepository.findByPostId(postId);
     }
-
-
-
-
-
 }
