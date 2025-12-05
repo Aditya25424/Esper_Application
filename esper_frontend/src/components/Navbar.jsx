@@ -9,11 +9,15 @@ const Navbar = () => {
     navigate("/create-post");
   };
 
+const handleProfileClick = () => {
+  navigate("/profile");
+} 
+
   return (
     <div>
         <div className="navbar">
-          <div className="front">
-            <h2>Esper</h2>
+          <div className="font-bold text-2xl start">
+            <h2 >Esper</h2>
           </div>
           <div className="mid">
             <input type="text" placeholder='Search posts, authors, topics...'  className='search'/>
@@ -24,7 +28,7 @@ const Navbar = () => {
               <button onClick={handleCreatePost}>Create Post</button>
             </div>
             <div className="noti"><BellRing /></div>
-            <div className="profile"><ShieldUser /></div>
+            <div className="profile" onClick={handleProfileClick}><ShieldUser /></div>
           </div>
            
         </div>

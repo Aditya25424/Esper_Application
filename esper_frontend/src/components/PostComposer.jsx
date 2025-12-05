@@ -1,27 +1,18 @@
 import React, { useState } from "react";
 import "./PostComposer.css";
-
-// const topics = ["Technology", "Design", "Education", "Health", "Travel", "Sports"];
-
 const PostComposer = () => {
   const [form, setForm] = useState({
     title: "",
-    body: "",
-    tags: "",
-    extra: "",
-    topic: "",
+    content: "",
+    hashtag: "",
+    image: "",
   });
-  // const [showTopics, setShowTopics] = useState(false);
 
-  // const update = (e) => {
-  //   const { name, value } = e.target;
-  //   setForm((f) => ({ ...f, [name]: value }));
-  // };
+  const update = (e) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+  };
 
-  // const selectTopic = (t) => {
-  //   setForm((f) => ({ ...f, topic: t }));
-  //   setShowTopics(false);
-  // };
 
   const submit = (e) => {
     e.preventDefault();
@@ -51,67 +42,41 @@ const PostComposer = () => {
             name="title"
             placeholder="Title"
             value={form.title}
-            // onChange={update}
+            onChange={update}
+             required
           />
 
           <textarea
             className="pc-textarea"
-            name="body"
+            name="content"
             placeholder="Write your thoughts here..."
-            value={form.body}
-            // onChange={update}
+            value={form.content}
+            onChange={update}
             rows={5}
+            required
           />
 
           <div className="pc-row">
             <input
               className="pc-input"
               type="text"
-              name="tags"
+              name="hashtag"
               placeholder="Add Tags"
-              value={form.tags}
-              // onChange={update}
+              value={form.hashtag}
+               required
+              onChange={update}
             />
             <input
               className="pc-input"
               type="FILE"
-              name="extra"
+              name="image"
               placeholder="IMAGE / VIDEO URL"
-              value={form.extra}
-              // onChange={update}
+              value={form.image}
+              onChange={update}
             />
           </div>
-
-          {/* Topic select */}
-          {/* <div className="pc-topic-wrap">
-            <button
-              type="button"
-              className="pc-topic-btn"
-              onClick={() => setShowTopics((s) => !s)}
-            >
-              <span>{form.topic || "Select Topic"}</span>
-              <span className="pc-chevron">›</span>
-            </button>
-
-            {showTopics && (
-              <div className="pc-topic-menu">
-                {topics.map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    className="pc-topic-item"
-                    onClick={() => selectTopic(t)}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div> */}
-
-          {/* Actions */}
           <div className="pc-actions">
-            <button type="button" className="pc-cancel" onClick={() => setForm({ title:"", body:"", tags:"", extra:"", topic:"" })}>
+            <button type="button" className="pc-cancel" onClick={() => setForm({ title:"", content:"", hashtag:"", image:"" })}>
               Cancel
             </button>
             <button type="submit" className="pc-publish">Publish</button>

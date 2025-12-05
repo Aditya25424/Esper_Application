@@ -4,20 +4,19 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import PostComposer from "./components/PostComposer";
+import Profile from './components/Profile';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Login Page (default) */}
         <Route path="/" element={<Login />} />
 
-        {/* Register Page */}
         <Route path="/register" element={<Register />} />
 
-        {/* Home/Dashboard Page */}
         <Route path="/home" element={<Home />} />
         <Route path="/create-post" element={<PostComposer />} />
+             <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );

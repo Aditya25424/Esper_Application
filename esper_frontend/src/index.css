@@ -19,9 +19,9 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  color: white;
   text-align: center;
   width: 180px;
+  margin: 3.5px;
    color: black;
 }
 
@@ -34,7 +34,7 @@ body {
 .crpost button{
   background-color:  #3D4854;
   color: white;
-  padding: 12px 15px;
+  padding: 8px 11px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
