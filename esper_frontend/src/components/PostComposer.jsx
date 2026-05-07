@@ -1,32 +1,89 @@
 import React, { useState } from "react";
 import "./PostComposer.css";
+import axios from "axios";
+
 const PostComposer = () => {
+
   const [form, setForm] = useState({
     title: "",
     content: "",
     hashtag: "",
-    image: "",
+    image: null,
   });
 
+  // Handle text inputs
   const update = (e) => {
     const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
+  // Handle image separately
+  const handleFileChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      image: e.target.files[0],
+    }));
+  };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    // TODO: POST to your API
-    console.log("Publish:", form);
-    alert("Post published (demo).");
+
+    try {
+
+      const formData = new FormData();
+
+      formData.append("userId", 1); // Example user id
+      formData.append("title", form.title);
+      formData.append("content", form.content);
+
+      // hashtags should be Set<String> in backend
+      formData.append("hashtags", form.hashtag);
+
+      if (form.image) {
+        formData.append("image", form.image);
+      }
+const token = localStorage.getItem("token");
+
+const response = await axios.post(
+  "http://localhost:8080/posts/create",
+  formData,
+  {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
+
+      console.log(response.data);
+
+      alert("Post Published Successfully");
+
+      // Reset form
+      setForm({
+        title: "",
+        content: "",
+        hashtag: "",
+        image: null,
+      });
+
+    } catch (error) {
+      console.error(error);
+      alert("Error while publishing post");
+    }
   };
 
   return (
     <div className="pc-page">
       <div className="pc-card">
-        {/* Header */}
+
         <div className="pc-header">
           <h1>Compose Your Post</h1>
+
           <img
             className="pc-avatar"
             src="https://i.pravatar.cc/40?img=5"
@@ -34,8 +91,8 @@ const PostComposer = () => {
           />
         </div>
 
-        {/* Form */}
         <form onSubmit={submit} className="pc-form">
+
           <input
             className="pc-input"
             type="text"
@@ -43,7 +100,7 @@ const PostComposer = () => {
             placeholder="Title"
             value={form.title}
             onChange={update}
-             required
+            required
           />
 
           <textarea
@@ -57,29 +114,46 @@ const PostComposer = () => {
           />
 
           <div className="pc-row">
+
             <input
               className="pc-input"
               type="text"
               name="hashtag"
               placeholder="Add Tags"
               value={form.hashtag}
-               required
               onChange={update}
             />
+
             <input
               className="pc-input"
-              type="FILE"
+              type="file"
               name="image"
-              placeholder="IMAGE / VIDEO URL"
-              value={form.image}
-              onChange={update}
+              onChange={handleFileChange}
             />
+
           </div>
+
           <div className="pc-actions">
-            <button type="button" className="pc-cancel" onClick={() => setForm({ title:"", content:"", hashtag:"", image:"" })}>
+
+            <button
+              type="button"
+              className="pc-cancel"
+              onClick={() =>
+                setForm({
+                  title: "",
+                  content: "",
+                  hashtag: "",
+                  image: null,
+                })
+              }
+            >
               Cancel
             </button>
-            <button type="submit" className="pc-publish">Publish</button>
+
+            <button type="submit" className="pc-publish">
+              Publish
+            </button>
+
           </div>
         </form>
       </div>

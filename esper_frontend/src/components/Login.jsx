@@ -35,7 +35,7 @@ const handleSubmit = async (e) => {
   return (
     <div className="login-page">
       <div className="login-card">
-        <h1 className="login-title">Esper</h1>
+        <h1 className="login-title">SHADD</h1>
         <form onSubmit={handleSubmit} className="login-form">
           <label htmlFor="username">Username</label>
           <input

@@ -17,7 +17,7 @@ const handleProfileClick = () => {
     <div>
         <div className="navbar">
           <div className="font-bold text-2xl start">
-            <h2 >Esper</h2>
+            <h2 >SHADD</h2>
           </div>
           <div className="mid">
             <input type="text" placeholder='Search posts, authors, topics...'  className='search'/>
