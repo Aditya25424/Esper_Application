@@ -29,16 +29,25 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .anyRequest().authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+  http
+            .cors(cors -> {})
+            .csrf(AbstractHttpConfigurer::disable)
 
-        return http.build();
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/posts/**").permitAll()
+                    .anyRequest().authenticated()
+            )
+
+            .sessionManagement(session ->
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthFilter,
+                    UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
     }
 
     @Bean
@@ -56,12 +65,15 @@ public class SecurityConfig {
 
     @Configuration
     public class WebCorsConfig implements WebMvcConfigurer {
-        @Override
-        public void addCorsMappings(CorsRegistry reg) {
-            reg.addMapping("/api/**")
-                    .allowedOrigins("http://localhost:5173")
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-                    .allowCredentials(true);
-        }
+
+    @Override
+    public void addCorsMappings(CorsRegistry reg) {
+
+        reg.addMapping("/**")
+                .allowedOrigins("http://localhost:5173")
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
+}
 }
