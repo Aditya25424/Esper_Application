@@ -54,6 +54,16 @@ public List<Post> getPostsByUser(@PathVariable Long userId){
     return postService.getPostsByUser(userId);
 }
 
+@PutMapping("/{postId}/like/{userId}")
+public Post likePost(
+        @PathVariable Long postId,
+        @PathVariable Long userId
+){
+
+    return postService.upvotePost(postId, userId);
+
+}
+
 
 
 }

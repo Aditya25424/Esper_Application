@@ -138,11 +138,31 @@ public class PostService {
 
     }
 
-    public Post upvotePost(Long postId) {
-        Post post = getPostById(postId);
+    public Post upvotePost(Long postId, Long userId) {
+
+    Post post = getPostById(postId);
+
+    User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+
+
+    if(post.getLikedUsers().contains(user)){
+
+        post.getLikedUsers().remove(user);
+
+        post.setUpvote(post.getUpvote() - 1);
+
+    }else{
+
+        post.getLikedUsers().add(user);
+
         post.setUpvote(post.getUpvote() + 1);
-        return postRepository.save(post);
+
     }
+
+    return postRepository.save(post);
+}
 
     public Post toggleSave(Long postId) {
         Post post = getPostById(postId);

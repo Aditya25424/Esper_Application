@@ -205,7 +205,7 @@ fetch(`http://localhost:8080/users/${userId}`)
             </div>
 
             <div className="articles-list">
-              {recentPosts.map((post) => (
+              {[...recentPosts].reverse().map((post) => (
                 <article key={post.title} className="article-card">
 
                   <div>

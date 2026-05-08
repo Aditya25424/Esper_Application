@@ -20,7 +20,7 @@ useEffect(() => {
   
 return (
     <div className='parent'>
-  {posts.map((post) => (
+  {[...posts].reverse().map((post) => (
     <div
   onClick={() => navigate(`/post/${post.id}`)}
   style={{ cursor: "pointer" }}>

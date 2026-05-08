@@ -16,6 +16,35 @@ const SinglePost = () => {
   const [post, setPost] = useState(null);
   const [lightboxSrc, setLightboxSrc] = useState(null);
 
+   const userId = localStorage.getItem("userId");
+
+  const handleLike = async (id) => {
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:8080/posts/${id}/like/${userId}`,
+      {
+        method: "PUT"
+      }
+    );
+
+    const updatedPost = await res.json();
+
+    setPosts((prev) =>
+      prev.map((post) =>
+        post.id === id ? updatedPost : post
+      )
+    );
+
+  }catch(err){
+
+    console.log(err);
+
+  }
+
+}
+
   useEffect(() => {
     fetch(`http://localhost:8080/posts/${id}`)
       .then((res) => res.json())
@@ -98,11 +127,11 @@ const SinglePost = () => {
               {post.comments ?? 0}
             </button>
             
-            <button className="action-btn like">
+            <button className="action-btn like"  onClick={() => handleLike(post.id)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
-              {post.likes ?? 0}
+              {post.upvote ?? 0}
             </button>
             <button className="action-btn share">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
