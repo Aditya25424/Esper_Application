@@ -146,7 +146,7 @@ const response = await axios.post(
               Cancel
             </button>
 
-            <button type="submit" className="pc-publish">
+            <button type="submit" className="pc-publish" onClick={() => navigate(-1)}>
               Publish
             </button>
 

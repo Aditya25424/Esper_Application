@@ -23,6 +23,8 @@ const handleSubmit = async (e) => {
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || "Login failed");
     localStorage.setItem("token", data.token);
+    localStorage.setItem("userId", data.id);
+    localStorage.setItem("username", data.username);
 
   navigate("/home");
     alert("Login success!");

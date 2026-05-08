@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Bell,
   CalendarDays,
@@ -9,28 +9,31 @@ import {
   LogOut,
   Plus,
   X,
+  Trash2,
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Profile.css'
 
-const recentPosts = [
-  {
-    title: 'Ethical Challenges in AI',
-    description:
-      'Exploring the complexités of ethics in artificial intelligence and future implications.',
-    image:
-      'https://cdn.mos.cms.futurecdn.net/DVffQnnibMWmNpx2Wfb5Se.jpg',
-    age: '2d ago',
-  },
-  {
-    title: 'Blockchain Beyond Banking',
-    description:
-      'Discussing how blockchain technology is transforming industries beyond finance.',
-    image:
-      'https://www.tdk.com/en/tech-mag/sites/default/files/2024-03/Blockchain-Cryptocurrency.jpg',
-    age: '1w ago',
-  },
-]
+
+
+// const recentPosts = [
+//   {
+//     title: 'Ethical Challenges in AI',
+//     description:
+//       'Exploring the complexités of ethics in artificial intelligence and future implications.',
+//     image:
+//       'https://cdn.mos.cms.futurecdn.net/DVffQnnibMWmNpx2Wfb5Se.jpg',
+//     age: '2d ago',
+//   },
+//   {
+//     title: 'Blockchain Beyond Banking',
+//     description:
+//       'Discussing how blockchain technology is transforming industries beyond finance.',
+//     image:
+//       'https://www.tdk.com/en/tech-mag/sites/default/files/2024-03/Blockchain-Cryptocurrency.jpg',
+//     age: '1w ago',
+//   },
+// ]
 
 const quickLinks = [
   {
@@ -49,6 +52,60 @@ const Profile = () => {
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
   const [notification, setNotification] = useState('')
+  const [user, setUser] = useState(null);
+
+  const [recentPosts, setRecentPosts] = useState([]);
+
+useEffect(() => {
+
+  const userId = localStorage.getItem("userId");
+
+  console.log(localStorage.getItem("userId"));
+
+  fetch(`http://localhost:8080/posts/user/${userId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setRecentPosts(data);
+    })
+    .catch((err) => console.log(err));
+
+
+
+fetch(`http://localhost:8080/users/${userId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setUser(data);
+    })
+    .catch((err) => console.log(err));
+
+}, []);
+
+  const handleDelete = async (id) => {
+
+  try {
+
+    const res = await fetch(
+      `http://localhost:8080/posts/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if(!res.ok){
+      throw new Error("Delete failed");
+    }
+
+    setRecentPosts((prev) =>
+      prev.filter((post) => post.id !== id)
+    );
+
+  } catch(err) {
+
+    console.log(err);
+
+  }
+
+}
 
   const handleLogout = () => navigate('/')
 
@@ -118,7 +175,7 @@ const Profile = () => {
                   alt="John Smith"
                   className="profile-avatar"
                 />
-                <h1 className="profile-name">John Smith</h1>
+                <h1 className="profile-name">{localStorage.getItem("username")}</h1>
                 <p className="profile-bio">
                   Passionate about emerging technologies like AI and blockchain.
                   Sharing insights on future trends and innovation.
@@ -153,7 +210,7 @@ const Profile = () => {
 
                   <div>
                     <div className="article-img-wrap">
-                      <img src={post.image} alt={post.title} className="article-img" />
+                      <img src={`http://localhost:8080/uploads/${post.image}`} alt={post.title} className="article-img" />
                     </div>
                     <div className="article-date">
                       <CalendarDays size={16} />
@@ -164,16 +221,24 @@ const Profile = () => {
                   <div className="article-content">
                     <h3 className="article-title">{post.title}</h3>
                     <p className="article-age-inline">{post.age}</p>
-                    <p className="article-desc">{post.description}</p>
+                    <p className="article-desc">{post.content}</p>
                     <div className="article-footer">
-                      <span className="article-tag">Technology</span>
+                      
                       <button
                         type="button"
-                        onClick={() => navigate('/home')}
+                        onClick={() => navigate(`/post/${post.id}`)}
                         className="view-post-btn"
                       >
                         View post
                       </button>
+                      <div className="post-top-bar">
+                      <button
+                     type="button"
+                     onClick={() => handleDelete(post.id)}
+                     className="delete-btn">
+                   <Trash2 size={18} />
+                   </button> </div>
+                     
                     </div>
                   </div>
                 </article>

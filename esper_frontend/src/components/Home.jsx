@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import Trending from "./trendingtopics";
 import Posts from "./Posts";
-
+import Userhome from "./Userhome";
 
 const Home = () => {
   return (

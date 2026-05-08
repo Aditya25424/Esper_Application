@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Cards } from './Cards'
+import { useNavigate } from "react-router-dom";
 
 const Posts = () => {
 
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
 useEffect(() => {
 
@@ -19,6 +21,9 @@ useEffect(() => {
 return (
     <div className='parent'>
   {posts.map((post) => (
+    <div
+  onClick={() => navigate(`/post/${post.id}`)}
+  style={{ cursor: "pointer" }}>
 
   <Cards
     key={post.id}
@@ -27,7 +32,7 @@ return (
     comments={post.comments?.length}
     description={post.content}
     image={`http://localhost:8080/uploads/${post.image}`}
-  />
+  /> </div>
 
    ))}
     </div>

@@ -48,6 +48,14 @@ public class PostController {
 
    }
 
+   @GetMapping("/user/{userId}")
+public List<Post> getPostsByUser(@PathVariable Long userId){
+
+    return postService.getPostsByUser(userId);
+}
+
+
+
 }
 
 

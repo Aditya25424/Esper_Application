@@ -60,6 +60,10 @@ const Register = () => {
 
       // Success
       setServerMsg(data?.message || "Registration successful");
+
+      localStorage.setItem("userId", data.id);
+      localStorage.setItem("token", data.token);
+
       alert("Registration successful! You can log in now.");
       navigate("/"); // go to Login
     } catch (err) {

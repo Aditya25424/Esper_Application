@@ -36,6 +36,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/auth/**","/uploads/**").permitAll()
                     .requestMatchers("/posts/**").permitAll()
+                    .requestMatchers("/posts/user/**").permitAll()
                     .anyRequest().authenticated()
             )
 
