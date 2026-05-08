@@ -1,16 +1,18 @@
 import React from 'react'
 import { ThumbsUp, MessageCircleDashed, Share2, Bookmark } from 'lucide-react';
+import "../App.css";
+
 export const Cards = (props) => {
   return (
     <div>
         <div className="card">
             <div className="top">
-                <img src={props.image} alt="" />
+                <img src={props.image} alt="" className="post-image" />
                 <h2>{props.title}</h2>
             </div>
             <div className="center">
                 <p>{props.description}</p>
-                <h4>Posted by: {props.author}</h4>
+                <h4>{props.author}</h4>
             </div>
             <div className="bottom">
                 <button><ThumbsUp />{props.likes}</button>

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "./PostComposer.css";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const PostComposer = () => {
+
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     title: "",
@@ -138,14 +141,7 @@ const response = await axios.post(
             <button
               type="button"
               className="pc-cancel"
-              onClick={() =>
-                setForm({
-                  title: "",
-                  content: "",
-                  hashtag: "",
-                  image: null,
-                })
-              }
+              onClick={() => navigate(-1)}
             >
               Cancel
             </button>

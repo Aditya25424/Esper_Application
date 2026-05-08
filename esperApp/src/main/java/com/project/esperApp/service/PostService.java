@@ -47,18 +47,27 @@ public class PostService {
 
         if (image != null && !image.isEmpty()) {
 
+            String uploadDir =
+                System.getProperty("user.dir") + "/uploads/";
+
             String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
-            Path filePath = Paths.get("uploads/" + fileName);
+            Path filePath = Paths.get(uploadDir,fileName);
 
             try {
                 Files.createDirectories(filePath.getParent());
+                System.out.println("Saving image to:");
+                System.out.println(filePath.toAbsolutePath());
                 Files.write(filePath, image.getBytes());
+                System.out.println("Image saved successfully!");
             } catch (IOException e) {
+                e.printStackTrace();
                 throw new RuntimeException("Image upload failed");
             }
 
             post.setImage(fileName);
-        }
+        } else {
+
+          System.out.println("Image is null or empty"); }
 
         if (tags != null && !tags.isEmpty()) {
             Set<Hashtag> hashtagEntities = tags.stream()

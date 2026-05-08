@@ -28,7 +28,7 @@ public class Post {
     private String title;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String content;
 
     private int upvote;
